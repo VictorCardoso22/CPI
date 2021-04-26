@@ -17,9 +17,8 @@ class OpmSearch extends Opm
     public function rules()
     {
         return [
-            [['id', 'cpai_id'], 'integer'],
-            [['nome', 'descricao'], 'safe'],
-            [['dimencao'], 'number'],
+            [['id', 'cpai_id', 'qtd_sd', 'qtd_cb', 'qtd_3sgt', 'qtd_2sgt', 'qtd_1sgt', 'qtd_st', 'qtd_2ten', 'qtd_1ten', 'qtd_cap', 'qtd_maj', 'qtd_tc', 'qtd_cel'], 'integer'],
+            [['nome', 'descricao', 'dimencao'], 'safe'],
         ];
     }
 
@@ -61,11 +60,23 @@ class OpmSearch extends Opm
         $query->andFilterWhere([
             'id' => $this->id,
             'cpai_id' => $this->cpai_id,
-            'dimencao' => $this->dimencao,
+            'qtd_sd' => $this->qtd_sd,
+            'qtd_cb' => $this->qtd_cb,
+            'qtd_3sgt' => $this->qtd_3sgt,
+            'qtd_2sgt' => $this->qtd_2sgt,
+            'qtd_1sgt' => $this->qtd_1sgt,
+            'qtd_st' => $this->qtd_st,
+            'qtd_2ten' => $this->qtd_2ten,
+            'qtd_1ten' => $this->qtd_1ten,
+            'qtd_cap' => $this->qtd_cap,
+            'qtd_maj' => $this->qtd_maj,
+            'qtd_tc' => $this->qtd_tc,
+            'qtd_cel' => $this->qtd_cel,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'descricao', $this->descricao]);
+            ->andFilterWhere(['like', 'descricao', $this->descricao])
+            ->andFilterWhere(['like', 'dimencao', $this->dimencao]);
 
         return $dataProvider;
     }
