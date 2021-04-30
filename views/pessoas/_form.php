@@ -20,9 +20,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'sexo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'opm_id')->textInput() ?>
+    <?= $form->field($model, 'opm_id')->dropdownList([
+        1 => 'item 1', 
+        2 => 'item 2'
+    ],
+    ['prompt'=>'Selecione a opm']) ?>
 
-    <?= $form->field($model, 'posto_id')->textInput() ?>
+    <!-- ->dropdownList([
+        1 => 'item 1', 
+        2 => 'item 2'
+    ],
+    ['prompt'=>'Select Category'] -->
+
+    <?= $form->field($model, 'posto_id')->dropdownList([
+        1 => 'item 1', 
+        2 => 'item 2'
+    ],
+    ['prompt'=>'Selecione o posto'])?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

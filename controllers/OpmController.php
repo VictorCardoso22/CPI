@@ -8,6 +8,9 @@ use app\models\OpmSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Cpai;
+use app\models\OpmRelatorio;
+use app\models\Pessoas;
 
 /**
  * OpmController implements the CRUD actions for Opm model.
@@ -65,6 +68,7 @@ class OpmController extends Controller
     public function actionCreate()
     {
         $model = new Opm();
+        $cpaiList = Cpai::getList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,6 +76,7 @@ class OpmController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'cpaiList' => $cpaiList,
         ]);
     }
 
@@ -85,6 +90,7 @@ class OpmController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $cpaiList = Cpai::getList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -92,6 +98,7 @@ class OpmController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'cpaiList' => $cpaiList,
         ]);
     }
 
@@ -107,6 +114,28 @@ class OpmController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionRelatorio()
+    {
+        $model = new OpmRelatorio();
+        $opmList = Opm::getList();
+
+        if ($model->load(Yii::$app->request->post()) ) {
+            $opm = $this->findModel($model->opmId);
+
+            $model->qtdPrevista = ($opm->qtd_sd + $opm->qtd_cb + $opm->qtd_3sgt + $opm->qtd_2sgt + $opm->qtd_1sgt + $opm->qtd_st + $opm->qtd_2ten + $opm->qtd_1ten + $opm->qtd_cap + $opm->qtd_maj + $opm->qtd_tc + $opm->qtd_cel);
+
+            $model->qtdReal = Pessoas::find()->where([
+                'opm_id' => $model->opmId,
+            ])->count();
+        }
+
+        return $this->render('relatorio',
+        [
+            'model'=>$model,
+            'opmList'=>$opmList,
+        ]);
     }
 
     /**

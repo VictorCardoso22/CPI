@@ -12,7 +12,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'cpai_id')->textInput() ?>
+    <?= $form->field($model, 'cpai_id')->dropdownList(
+        $cpaiList,
+    ['prompt'=>'Selecione a CPA de origem']) ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 

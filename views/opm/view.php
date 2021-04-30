@@ -30,7 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'cpai_id',
+            [   
+                'label'=>'CPAI',
+                'value'=> $model->cpai->nome,
+            ],
             'nome',
             'descricao:ntext',
             'dimencao',

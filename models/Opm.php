@@ -1,6 +1,8 @@
 <?php
 
 namespace app\models;
+use app\models\Cpai;
+use yii\helpers\ArrayHelper;
 
 use Yii;
 
@@ -96,5 +98,17 @@ class Opm extends \yii\db\ActiveRecord
     public function getPessoas()
     {
         return $this->hasMany(Pessoas::className(), ['opm_id' => 'id']);
+    }
+
+    public function getCpai()
+    {
+        return $this->hasOne(Cpai::className(), ['id' => 'cpai_id']);
+    }
+
+    public static function getList(){
+        $droptions = self::find()->asArray()
+                                 ->orderBy('nome')
+                                 ->all();
+        return ArrayHelper::map($droptions, "id","nome");
     }
 }

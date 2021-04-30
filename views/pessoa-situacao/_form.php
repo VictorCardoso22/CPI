@@ -12,9 +12,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'pessoa_id')->textInput() ?>
+    <?= $form->field($model, 'pessoa_id')->dropdownList([
+        1 => 'item 1', 
+        2 => 'item 2'
+    ],
+    ['prompt'=>'Selecione a Pessoa']) ?>
 
-    <?= $form->field($model, 'situacao_id')->textInput() ?>
+    <?= $form->field($model, 'situacao_id')->dropdownList([
+        1 => 'item 1', 
+        2 => 'item 2'
+    ],
+    ['prompt'=>'Selecione a Situação']) ?>
 
     <?= $form->field($model, 'data_inicio')->textInput() ?>
 

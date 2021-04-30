@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use yii\helpers\ArrayHelper;
 
 use Yii;
 
@@ -41,4 +42,11 @@ class Cpai extends \yii\db\ActiveRecord
             'nome' => 'Nome',
         ];
     }
+    public static function getList(){
+        $droptions = self::find()->asArray()
+                                 ->orderBy('nome')
+                                 ->all();
+        return ArrayHelper::map($droptions, "id","nome");
+    }
+
 }
