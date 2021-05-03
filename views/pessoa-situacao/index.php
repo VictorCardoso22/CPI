@@ -27,8 +27,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'pessoa_id',
-            'situacao_id',
+            // 'pessoa_id',
+            [
+                'label' => 'Nome',
+                'attribute' => 'pessoa_id',
+                'content' => function($model){
+                    return $model->pessoa->nome;
+                }
+            ],
+            // 'situacao_id',
+            [
+                'label' => 'Situação',
+                'attribute' => 'situacao_id',
+                'content' => function($model){
+                    return $model->situacao->nome;
+                }
+            ],
             'data_inicio',
             'data_fim',
             //'status',

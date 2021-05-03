@@ -8,6 +8,8 @@ use app\models\PessoasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Postos;
+use app\models\Opm;
 
 /**
  * PessoasController implements the CRUD actions for Pessoas model.
@@ -65,6 +67,8 @@ class PessoasController extends Controller
     public function actionCreate()
     {
         $model = new Pessoas();
+        $postoList = Postos::getList();
+        $opmList = Opm::getList();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,6 +76,8 @@ class PessoasController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'postoList' => $postoList,
+            'opmList' => $opmList,
         ]);
     }
 
@@ -85,6 +91,9 @@ class PessoasController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $postoList = Postos::getList();
+        $opmList = Opm::getList();
+        
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -92,6 +101,8 @@ class PessoasController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'postoList' => $postoList,
+            'opmList' => $opmList,
         ]);
     }
 

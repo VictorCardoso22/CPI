@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\helpers\ArrayHelper;
+
 use Yii;
 
 /**
@@ -49,7 +51,7 @@ class PessoaSituacao extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'pessoa_id' => 'Pessoa ID',
+            'nome_pessoa' => 'Pessoa ID',
             'situacao_id' => 'Situacao ID',
             'data_inicio' => 'Data Inicio',
             'data_fim' => 'Data Fim',
@@ -64,7 +66,11 @@ class PessoaSituacao extends \yii\db\ActiveRecord
      */
     public function getPessoa()
     {
-        return $this->hasOne(Pessoas::className(), ['id' => 'pessoa_id']);
+        return $this->hasOne(Pessoas::className(), 
+        [
+            'id' => 'pessoa_id'
+            
+        ]);
     }
 
     /**
@@ -75,5 +81,11 @@ class PessoaSituacao extends \yii\db\ActiveRecord
     public function getSituacao()
     {
         return $this->hasOne(Situacao::className(), ['id' => 'situacao_id']);
+    }
+    public static function getList(){
+        $droptions = self::find()->asArray()
+                                 ->orderBy('nome')
+                                 ->all();
+        return ArrayHelper::map($droptions, "id","nome");
     }
 }

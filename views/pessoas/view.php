@@ -34,8 +34,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'nome_guerra',
             'sexo',
-            'opm_id',
-            'posto_id',
+            // 'opm_id',
+            // 'posto_id',
+            [   
+                'label'=>'opm_id',
+                'value'=> $model->opm->nome,
+            ],
+            [   
+                'label'=>'posto_id',
+                'value'=> $model->posto->nome,
+            ],
         ],
     ]) ?>
 

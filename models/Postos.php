@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use yii\helpers\ArrayHelper;
 
 use Yii;
 
@@ -52,5 +53,12 @@ class Postos extends \yii\db\ActiveRecord
     public function getPessoas()
     {
         return $this->hasMany(Pessoas::className(), ['posto_id' => 'id']);
+    }
+
+    public static function getList(){
+        $droptions = self::find()->asArray()
+                                 ->orderBy('nome')
+                                 ->all();
+        return ArrayHelper::map($droptions, "id","nome");
     }
 }
