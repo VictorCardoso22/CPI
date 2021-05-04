@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\Situacao;
 use app\models\Pessoas;
 use app\models\PessoaSituacaoRelatorio;
+use yii\data\ActiveDataProvider;
 
 /**
  * PessoaSituacaoController implements the CRUD actions for PessoaSituacao model.
@@ -112,25 +113,36 @@ class PessoaSituacaoController extends Controller
     {
         $model = new PessoaSituacaoRelatorio();
         $situacaoList = Situacao::getList();
-        $pessoaSituacao = PessoaSituacao::getList();
+        $pessoaSituacao = PessoaSituacao::getSituacaoList();
 
         if ($model->load(Yii::$app->request->post()) ) {
             $pessoaSituacao = $this->findModel($model->situacaoId);
-
-            $model->nome = PessoaSituacao::find()->where([
-                'nome' => $model->nome_pessoa
-            ]);
+ 
+           
+            
             $model->situacao = PessoaSituacao::find()->where([
                 'situacao' => $model->situacao_id
             ]);
 
            
+           
         }
+
+        $query = PessoaSituacao::find()
+                ->where(['situacao_id' =>  $situacaoList ]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                    'pageSize' => 3
+            ],
+        ]);
 
         return $this->render('relatorio',
         [
             'model'=>$model,
             'situacaoList' => $situacaoList,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
