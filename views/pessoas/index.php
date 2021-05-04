@@ -31,8 +31,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             'nome_guerra',
             'sexo',
-            //'opm_id',
-            //'posto_id',
+            // 'opm_id',
+            [
+                'label' => 'OPM',
+                'attribute' => 'opm_id',
+                'content' => function($model){
+                    return $model->opm->nome;
+                }
+            ],
+            // 'posto_id',
+            [
+                'label' => 'Posto',
+                'attribute' => 'posto_id',
+                'content' => function($model){
+                    return $model->posto->nome;
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -84,8 +84,8 @@ class PessoaSituacao extends \yii\db\ActiveRecord
     }
     public static function getList(){
         $droptions = self::find()->asArray()
-                                 ->orderBy('nome')
+                                 ->orderBy('situacao_id')
                                  ->all();
-        return ArrayHelper::map($droptions, "id","nome");
+        return ArrayHelper::map($droptions, "id","situacao_id");
     }
 }

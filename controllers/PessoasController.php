@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Postos;
 use app\models\Opm;
+use app\models\PessoaSituacao;
 
 /**
  * PessoasController implements the CRUD actions for Pessoas model.
@@ -120,6 +121,7 @@ class PessoasController extends Controller
         return $this->redirect(['index']);
     }
 
+    
     /**
      * Finds the Pessoas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

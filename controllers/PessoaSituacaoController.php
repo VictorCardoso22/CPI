@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Situacao;
 use app\models\Pessoas;
+use app\models\PessoaSituacaoRelatorio;
 
 /**
  * PessoaSituacaoController implements the CRUD actions for PessoaSituacao model.
@@ -56,6 +57,7 @@ class PessoaSituacaoController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            
         ]);
     }
 
@@ -103,6 +105,32 @@ class PessoaSituacaoController extends Controller
             'model' => $model,
             'situacaoList' => $situacaoList,
             'pessoaList' => $pessoaList,
+        ]);
+    }
+
+    public function actionRelatorio()
+    {
+        $model = new PessoaSituacaoRelatorio();
+        $situacaoList = Situacao::getList();
+        $pessoaSituacao = PessoaSituacao::getList();
+
+        if ($model->load(Yii::$app->request->post()) ) {
+            $pessoaSituacao = $this->findModel($model->situacaoId);
+
+            $model->nome = PessoaSituacao::find()->where([
+                'nome' => $model->nome_pessoa
+            ]);
+            $model->situacao = PessoaSituacao::find()->where([
+                'situacao' => $model->situacao_id
+            ]);
+
+           
+        }
+
+        return $this->render('relatorio',
+        [
+            'model'=>$model,
+            'situacaoList' => $situacaoList,
         ]);
     }
 

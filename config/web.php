@@ -13,8 +13,9 @@ $config = [
         '@adminlte/widgets'=>'@vendor/adminlte/yii2-widgets'
     ],
     'components' => [
-        'formatter' => [
+        'formatter' => [            
             'nullDisplay' => '-',
+            'dateFormat' => 'dd/MM/yyyy',
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -55,6 +56,32 @@ $config = [
             ],
         ],
         */
+    ], 
+    'modules' => [
+        'gridview' => [
+            'class' => 'kartik\grid\Module',
+        ],
+        'datecontrol' =>  [
+            'class' => 'kartik\datecontrol\Module',
+
+            // format settings for displaying each date attribute
+            'displaySettings' => [
+                'date' => 'd/m/Y',
+                'time' => 'H:i:s A',
+                'datetime' => 'd/m/Y H:i:s A',
+            ],
+
+            // format settings for saving each date attribute
+            'saveSettings' => [
+                'date' => 'Y-m-d', 
+                'time' => 'H:i:s',
+                'datetime' => 'Y-m-d H:i:s',
+            ],
+
+            // automatically use kartik\widgets for each of the above formats
+            'autoWidget' => true,
+
+        ] 
     ],
     'params' => $params,
 ];

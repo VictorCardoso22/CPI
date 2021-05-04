@@ -4,14 +4,14 @@
   use yii\widgets\DetailView;
 ?>
 
-<h1>Relatorio OPM</h1>
+<h1>Relatorio Pessoa Situação</h1>
 
 <div class="opm-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'opmId')->dropdownList(
-        $opmList,
+    <?= $form->field($model, 'situacaoList')->dropdownList(
+        $situacaoList,
     ['prompt'=>'Selecione a OPM de origem']) ?>
 
     <div class="form-group">
@@ -22,13 +22,11 @@
     
 </div>
 
-
-
 <?= DetailView::widget([
         'model' => $model,        
         'attributes' => [
-           'qtdPrevista',
-           'qtdReal'            
+           'nome',
+           'situacao'            
         ],
     ]) 
 ?>
