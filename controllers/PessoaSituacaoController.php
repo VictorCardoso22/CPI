@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Situacao;
 use app\models\Pessoas;
+use app\models\Opm;
 use app\models\PessoaSituacaoRelatorio;
 use yii\data\ActiveDataProvider;
 
@@ -113,23 +114,16 @@ class PessoaSituacaoController extends Controller
     {
         $model = new PessoaSituacaoRelatorio();
         $situacaoList = Situacao::getList();
-        $pessoaSituacao = PessoaSituacao::getSituacaoList();
+        $opmList = Opm::getList();
+        // $pessoaSituacao = PessoaSituacao::getSituacaoList();
 
         if ($model->load(Yii::$app->request->post()) ) {
             $pessoaSituacao = $this->findModel($model->situacaoId);
  
-           
-            
-            $model->situacao = PessoaSituacao::find()->where([
-                'situacao' => $model->situacao_id
-            ]);
-
-           
-           
         }
 
         $query = PessoaSituacao::find()
-                ->where(['situacao_id' =>  $situacaoList ]);
+                ->where(['situacao_id' => $model->situacaoId ]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -141,6 +135,8 @@ class PessoaSituacaoController extends Controller
         return $this->render('relatorio',
         [
             'model'=>$model,
+            'situacao_id' => $model->situacaoId,
+            'opmList' => $opmList,
             'situacaoList' => $situacaoList,
             'dataProvider' => $dataProvider,
         ]);

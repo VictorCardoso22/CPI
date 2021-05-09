@@ -102,6 +102,17 @@ class OpmController extends Controller
         ]);
     }
 
+    public function actionListagem()
+    {
+        $searchModel = new OpmSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Deletes an existing Opm model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -124,12 +135,28 @@ class OpmController extends Controller
         if ($model->load(Yii::$app->request->post()) ) {
             $opm = $this->findModel($model->opmId);
 
-            $model->qtdPrevista = ($opm->qtd_sd + $opm->qtd_cb + $opm->qtd_3sgt + $opm->qtd_2sgt + $opm->qtd_1sgt + $opm->qtd_st + $opm->qtd_2ten + $opm->qtd_1ten + $opm->qtd_cap + $opm->qtd_maj + $opm->qtd_tc + $opm->qtd_cel);
+            $model->qtdPrevista = ($opm->qtd_sd + $opm->qtd_cb + $opm->qtd_3sgt + $opm->qtd_2sgt + $opm->qtd_1sgt + $opm->qtd_st + $opm->qtd_2ten + $opm->qtd_1ten + $opm->qtd_cap + $opm->qtd_maj + $opm->qtd_tc + $opm->qtd_cel);     
+            
+            
 
             $model->qtdReal = Pessoas::find()->where([
                 'opm_id' => $model->opmId,
             ])->count();
+
+            $model->qtdInexistente = ($model->qtdPrevista - $model->qtdReal);
+
+            // Porcentagens do efetivo
+           
+            $model->percPrevista = ($model->qtdPrevista*100) / $model->qtdPrevista;
+            $model->percReal = ($model->qtdReal*100) / $model->qtdPrevista;
+            $model->percInexistente = ($model->qtdInexistente*100) / $model->qtdPrevista;
+
+
+            $model->qtdPrevista = $model->qtdPrevista . '  |  ' . $model->percPrevista.'%';    
+            $model->qtdReal = $model->qtdReal . '  |  ' .  number_format($model->percReal, '2').'%';
+            $model->qtdInexistente = $model->qtdInexistente . '  |  ' .  number_format($model->percInexistente, '2').'%';
         }
+      
 
         return $this->render('relatorio',
         [

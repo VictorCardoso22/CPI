@@ -28,7 +28,8 @@
         'model' => $model,        
         'attributes' => [
            'qtdPrevista',
-           'qtdReal'            
+           'qtdReal',
+           'qtdInexistente'           
         ],
     ]) 
 ?>

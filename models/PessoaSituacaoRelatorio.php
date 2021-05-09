@@ -14,6 +14,7 @@ class PessoaSituacaoRelatorio extends Model
   public $situacaoList;
   public $nome;
   public $situacao;
+  public $opmId;
 
   
 
@@ -22,7 +23,8 @@ class PessoaSituacaoRelatorio extends Model
   {
 
     return [
-      [['situacaoList'],'required'],
+      [['situacaoId'],'required'],
+      [['opmId'], 'safe'],
     ];
   }
 
@@ -31,6 +33,7 @@ class PessoaSituacaoRelatorio extends Model
         return [
             'nome' => 'Nome',
             'situacao' => 'Situação',
+            'opmId' => 'OPM',
         ];
     }
 }

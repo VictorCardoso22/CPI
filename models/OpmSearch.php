@@ -74,6 +74,7 @@ class OpmSearch extends Opm
             'qtd_cel' => $this->qtd_cel,
         ]);
 
+
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao])
             ->andFilterWhere(['like', 'dimencao', $this->dimencao]);

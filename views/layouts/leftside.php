@@ -66,9 +66,9 @@ use yii\helpers\Url;
                         // partes do sistema
                         ['label' => 'CPAs', 'icon' => 'fa fa-institution', 'url' => ['/cpai/index'],],
                         ['label' => 'OPMs', 'icon' => 'fa fa-institution', 'url' => ['/opm/index'],],
-                        ['label' => 'Pessoas', 'icon' => 'fa fa-institution', 'url' => ['/pessoas/index'],],
-                        ['label' => 'Situação', 'icon' => 'fa fa-institution', 'url' => ['/situacao/index'],],
-                        ['label' => 'PessoasSituação', 'icon' => 'fa fa-institution', 'url' => ['/pessoa-situacao/index'],],
+                        ['label' => 'Pessoas', 'icon' => 'fa fa-user', 'url' => ['/pessoas/index'],],
+                        ['label' => 'Situação', 'icon' => 'fa fa-check-square-o', 'url' => ['/situacao/index'],],
+                        ['label' => 'Pessoas - Situação', 'icon' => 'fa fa-refresh', 'url' => ['/pessoa-situacao/index'],],
 
                         ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
                         ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],

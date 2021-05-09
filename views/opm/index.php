@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+// use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OpmSearch */
@@ -15,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Opm', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar Opm', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Relatorio', ['relatorio'], ['class' => 'btn btn-primary']) ?>
     </p>
 
@@ -24,30 +25,31 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'cpai_id',
-            'nome',
-            'descricao:ntext',
-            'dimencao',
-            //'qtd_sd',
-            //'qtd_cb',
-            //'qtd_3sgt',
-            //'qtd_2sgt',
-            //'qtd_1sgt',
-            //'qtd_st',
-            //'qtd_2ten',
-            //'qtd_1ten',
-            //'qtd_cap',
-            //'qtd_maj',
-            //'qtd_tc',
-            //'qtd_cel',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+        'columns' => require(__DIR__.'/_columns.php'),'exportConfig' => [
+           
+            GridView::EXCEL=>[],
+            
+        ], 
+        'toolbar'=> [
+            ['content'=>
+                
+                Html::a('<i class="glyphicon glyphicon-repeat"></i>', [''],
+                ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
+                '{toggleData}'.
+                '{export}',
+                
+            ],
+        ],    
+        'striped' => true,
+        'condensed' => true,
+        'responsive' => true,          
+        'panel' => [
+            'type' => 'primary', 
+            'heading' => '<i class="glyphicon glyphicon-list"></i> OPMs',
+            'before'=>'',
+            'after'=>''
+        ]
+    ])?> ?>
 
 
 </div>

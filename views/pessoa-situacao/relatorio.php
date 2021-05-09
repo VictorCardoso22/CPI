@@ -12,9 +12,13 @@
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'situacaoList')->dropdownList(
-        $situacaoList,
+    <?= $form->field($model, 'opmId')->dropdownList(
+        $opmList,
     ['prompt'=>'Selecione a OPM de origem']) ?>
+
+    <?= $form->field($model, 'situacaoId')->dropdownList(
+        $situacaoList,
+    ['prompt'=>'Selecione a Situação']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>
@@ -24,39 +28,32 @@
     
 </div>
 
-<?= GridView::widget([
-   
-  'dataProvider' => $dataProvider, 
-//   'model' => function($model){
-//       return $model->situaca->id;
-//   },
-  'columns' => [
-      ['class' => 'yii\grid\SerialColumn'],  
-      
-           'id',        
-        [
-            'label' => 'Nome',
-            'attribute' => 'pessoa_id',
-            'content' => function($model){
-                return $model->pessoa->nome;
-            }
-        ],
-        [
-            'label' => 'Situação',
-            'attribute' => 'situacao_id',
-            'content' => function($model){
-                return $model->situacao->nome;
-            }
-        ],        
-        ]
-]);
-?>
-<!-- 
 
-//  GridView::widget([
-//         'model' => $model,        
-//         'attributes' => [
-//            'nome',
-//            'situacao'            
-//         ],
-//     ]) 
+                        <?= GridView::widget([
+                        
+                        'dataProvider' => $dataProvider, 
+                        //   'model' => function($model){
+                        //       return $model->situaca->id;
+                        //   },
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],  
+                            
+                                'id',        
+                                [
+                                    'label' => 'Nome',
+                                    'attribute' => 'pessoa_id',
+                                    'content' => function($model){
+                                        return $model->pessoa->nome;
+                                    }
+                                ],
+                                [
+                                    'label' => 'Situação',
+                                    'attribute' => 'situacao_id',
+                                    'content' => function($model){
+                                        return $model->situacao->nome;
+                                    }
+                                ],        
+                                ]
+                        ]);
+                        ?>
+                    

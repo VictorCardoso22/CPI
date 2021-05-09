@@ -3,6 +3,7 @@
 namespace app\models;
 use app\models\Postos;
 use app\models\Opm;
+use app\models\PessoaSituacao;
 
 use yii\helpers\ArrayHelper;
 
@@ -75,6 +76,12 @@ class Pessoas extends \yii\db\ActiveRecord
     public function getPessoaSituacaos()
     {
         return $this->hasMany(PessoaSituacao::className(), ['pessoa_id' => 'id']);
+    }
+
+    public function getPessoaSituacao()
+    {
+        return $this->hasOne(PessoaSituacao::className(), ['pessoa_id' => 'id'])
+                    ->orderBy(['pessoa_situacao.id'=>SORT_DESC]);
     }
 
     /**

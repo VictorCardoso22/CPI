@@ -11,6 +11,7 @@ use app\models\Pessoas;
  */
 class PessoasSearch extends Pessoas
 {
+    public $situacaoNome;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +20,7 @@ class PessoasSearch extends Pessoas
         return [
             [['id', 'opm_id', 'posto_id'], 'integer'],
             [['cpf'], 'number'],
-            [['nome', 'nome_guerra', 'sexo'], 'safe'],
+            [['nome', 'nome_guerra', 'sexo', 'situacaoNome'], 'safe'],
         ];
     }
 
@@ -41,13 +42,17 @@ class PessoasSearch extends Pessoas
      */
     public function search($params)
     {
+        $this->opm_id = '';
         $query = Pessoas::find();
+        $query->joinWith(['pessoaSituacao']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            //  'sort'=> ['defaultOrder' => ['situacaoNome' => SORT_ASC]],
         ]);
+       
 
         $this->load($params);
 
@@ -59,7 +64,6 @@ class PessoasSearch extends Pessoas
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'cpf' => $this->cpf,
             'opm_id' => $this->opm_id,
             'posto_id' => $this->posto_id,
@@ -67,7 +71,9 @@ class PessoasSearch extends Pessoas
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'nome_guerra', $this->nome_guerra])
-            ->andFilterWhere(['like', 'sexo', $this->sexo]);
+            ->andFilterWhere(['like', 'sexo', $this->sexo])
+            ->andFilterWhere(['=','pessoa_situacao.situacao_id', $this->situacaoNome]);
+            // ->orWhere(['=','pessoa_situacao.situacao_id', '']);
 
         return $dataProvider;
     }

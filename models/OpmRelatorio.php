@@ -11,6 +11,13 @@ class OpmRelatorio extends Model
   public $opmId;
   public $qtdPrevista;
   public $qtdReal;
+  public $qtdInexistente;
+
+  public $percPrevista;
+  public $percReal;
+  public $percInexistente;
+
+
 
 
   public function rules()
@@ -26,6 +33,7 @@ class OpmRelatorio extends Model
         return [
             'qtdPrevista' => 'Quantidade Prevista',
             'qtdReal' => 'Quantidade Real',
+            'qtdInexistente' => 'Quantidade Inexistente'
         ];
     }
 }

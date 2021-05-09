@@ -82,6 +82,18 @@ class PessoasController extends Controller
         ]);
     }
 
+    public function actionListagem()
+    {
+        $searchModel = new PessoasSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+
     /**
      * Updates an existing Pessoas model.
      * If update is successful, the browser will be redirected to the 'view' page.
