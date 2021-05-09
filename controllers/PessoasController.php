@@ -31,7 +31,7 @@ class PessoasController extends Controller
             ],
         ];
     }
-
+    
     /**
      * Lists all Pessoas models.
      * @return mixed

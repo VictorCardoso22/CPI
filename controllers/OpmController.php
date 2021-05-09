@@ -104,7 +104,7 @@ class OpmController extends Controller
 
     public function actionListagem()
     {
-        $searchModel = new OpmSearch();
+        $searchModel = new PessoasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -131,6 +131,8 @@ class OpmController extends Controller
     {
         $model = new OpmRelatorio();
         $opmList = Opm::getList();
+        $searchModel = new OpmSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         if ($model->load(Yii::$app->request->post()) ) {
             $opm = $this->findModel($model->opmId);
@@ -161,7 +163,9 @@ class OpmController extends Controller
         return $this->render('relatorio',
         [
             'model'=>$model,
-            'opmList'=>$opmList,
+            'opmList'=>$opmList, 
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
