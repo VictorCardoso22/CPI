@@ -5,34 +5,64 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name'=>'NOME DO SISTEMA',
+    'sourceLanguage'=>'pt-BR',
+    'language'=>'pt-BR',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
-        '@adminlte/widgets'=>'@vendor/adminlte/yii2-widgets'
     ],
     'components' => [
-        'formatter' => [            
-            'nullDisplay' => '-',
-            'dateFormat' => 'dd/MM/yyyy',
+        'user' => [
+            'identityClass' => 'dektrium\user\models\User',
+            'enableAutoLogin' => true,
+            'loginUrl' => ['user/login'],
+            'authTimeout' => 1800, // auth expire in 30 minutes
+            
+        ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'Sis_CPI',
+            'cookieValidationKey' => 'qJpZnsb8NKCPDiyTsGhzeEfJGUcQY5bI',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+         'view' => [
+            'class' => 'yii\web\View',
+            'theme' => [
+                'class' => 'yii\base\Theme',
+                'pathMap' => [
+                    '@app/views' => '@app/themes/lte'
+                ],
+            ],
+         ],
+         'assetManager' => [
+        'bundles' => [
+            'dmstr\web\AdminLteAsset' => [
+                'skin' => 'skin-green',
+            ],
+        ],
+    ],
+        
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
+            'transport'=>[
+               'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => '',
+                'password' => '',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
@@ -55,10 +85,53 @@ $config = [
             'rules' => [
             ],
         ],
-        */
-    ], 
+        */ 'i18n' => [
+        'translations' => [
+            '*' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@app/messages', // if advanced application, set @frontend/messages
+                'sourceLanguage' => 'en',
+                'fileMap' => [
+                    //'main' => 'main.php',
+                ],
+            ],
+        ],
+    ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'defaultRoles' => ['guest', 'user'],
+        ],
+    ],
+    'as beforeRequest' => [
+    'class' => 'yii\filters\AccessControl',
+    'rules' => [
+        [
+            'actions' => ['login', 'error','forgot','register','resend'],
+            'allow' => true,
+        ],
+        [
+
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ],
+    ],
     'modules' => [
-        'gridview' => [
+    'user' => [
+        'class' => 'dektrium\user\Module',
+        'enableUnconfirmedLogin' => true,
+        'confirmWithin' => 21600,
+        'cost' => 12,
+        'admins' => ['admin','victor'],
+        'modelMap'=>[
+            'RegistrationForm'=>'app\models\RegistrationForm'
+        ]
+    ],
+        'rbac' =>  [
+            'class' => 'yii2mod\rbac\Module',
+        
+    ],
+    'gridview' => [
             'class' => 'kartik\grid\Module',
         ],
         'datecontrol' =>  [
@@ -66,9 +139,9 @@ $config = [
 
             // format settings for displaying each date attribute
             'displaySettings' => [
-                'date' => 'd/m/Y',
+                'date' => 'd-m-Y',
                 'time' => 'H:i:s A',
-                'datetime' => 'd/m/Y H:i:s A',
+                'datetime' => 'd-m-Y H:i:s A',
             ],
 
             // format settings for saving each date attribute
@@ -78,11 +151,14 @@ $config = [
                 'datetime' => 'Y-m-d H:i:s',
             ],
 
+
+
             // automatically use kartik\widgets for each of the above formats
             'autoWidget' => true,
 
-        ] 
-    ],
+        ]
+],
+    
     'params' => $params,
 ];
 
@@ -100,7 +176,18 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
+       'generators' => [ //here
+            'kartikgii-crud' => ['class' => 'warrence\kartikgii\crud\Generator'],
+            'crud' => [
+                'class' => 'yii\gii\generators\crud\Generator',
+                'templates' => [
+                    'adminlte' => '@vendor/dmstr/yii2-adminlte-asset/gii/templates/crud/simple',
+                    
+                ]
+             ]
+        ]
     ];
+    
 }
 
 return $config;
